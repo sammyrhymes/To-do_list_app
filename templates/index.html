@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <h1 class="text-3xl font-bold mb-4">Todo List</h1>
+   <table class="border-collapse">
+       <tbody>
+           {% for todo in todos %}
+               <tr>
+                   <td class="p-2 {{ 'line-through' if todo[2] else '' }}">{{ todo[1] }}</td>
+                   <td class="p-2">
+                    <form action="{{ url_for('update_task', todo_id=todo[0]) }}" method="post">
+                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            {{ 'Complete' if todo[2] else 'Mark Complete' }}
+                        </button>
+                     </form>                     
+                   </td>
+               </tr>
+           {% endfor %}
+           <tr>
+               <td class="p-2">
+                   <form action="{{ url_for('add_task') }}" method="post">
+                       <input type="text" name="task" placeholder="Add a task" class="border rounded p-2">
+                       <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
+                   </form>
+               </td>
+           </tr>
+       </tbody>
+   </table>
+{% endblock %}
